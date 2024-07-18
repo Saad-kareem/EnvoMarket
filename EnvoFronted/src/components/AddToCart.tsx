@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -14,23 +15,37 @@ import {
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { OrderPlace } from "../service/action/action";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import axios from "axios";
+import { loadStripe } from "@stripe/stripe-js";
+import { jwtDecode } from "jwt-decode";
+import { OrderPlace } from "../service/action/action";
+const stripePromise = loadStripe(
+  "pk_test_51Nv06bHv7FnHz0YWZv4xGwu88nT00IMNhKikYWChBFGEEVK88FUjhJfa5ysEGmWKLBmCR3d6o3CrdDKalmUB4bLD00atH2xhnm"
+);
 
 const ShoppingCart = () => {
   const navigate = useNavigate();
   const cart = useSelector((state: any) => state.cart.cartItems);
   const dispatch = useDispatch();
-  const [userEmail, setUserEmail] = useState("");
   const [userAddress, setUserAddress] = useState("");
-  const [orderPlaced, setOrderPlaced] = useState(false);
+  const [userInfo, setUserInfo] = useState({ email: "" });
+  const [session, setSession] = useState("");
 
-  const totalPrices = cart.reduce(
-    (acc: number, item: any) => acc + item.totalPrice,
-    0
-  );
-  const handleCheckout = () => {
+  const email = userInfo.email;
+  localStorage.setItem("session", session);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        setUserInfo(jwtDecode(token));
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    }
+  }, []);
+
+  const handleCheckout = async () => {
     if (cart.length === 0) {
       alert(
         "Your cart is empty. Please add items to your cart before checkout."
@@ -38,25 +53,45 @@ const ShoppingCart = () => {
       return;
     }
 
-    if (!userEmail || !userAddress) {
-      alert("Please fill in your email and address before checkout.");
+    if (!userAddress) {
+      alert("Please fill in your address before checkout.");
       return;
     }
-    dispatch(OrderPlace(cart, userEmail, userAddress,totalPrices));
-    setOrderPlaced(true);
-  };
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (orderPlaced) {
-        localStorage.removeItem("cart");
-        navigate("/");
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3000/stripe/create-checkout-session",
+        {
+          cartItems: cart,
+          email: email,
+        }
+      );
+
+      setSession(data.id);
+
+      // Place the order with the new session ID
+      const Items = OrderPlace(cart, userAddress, email, data.id);
+      await dispatch(Items); // Await the dispatch to ensure it completes
+      localStorage.removeItem("cart");
+
+      const stripe = await stripePromise;
+
+      if (!stripe) {
+        console.error("Stripe has not loaded correctly.");
+        return;
       }
-    }, 5000);
-  }, [orderPlaced, navigate]);
 
+      const result = await stripe.redirectToCheckout({
+        sessionId: data.id,
+      });
 
-  console.log(totalPrices);
+      if (result.error) {
+        console.error(result.error.message);
+      }
+    } catch (error) {
+      console.error("Error creating Stripe Checkout session:", error);
+    }
+  };
 
   return (
     <Box p={2}>
@@ -70,7 +105,7 @@ const ShoppingCart = () => {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Quantity</TableCell>
-              <TableCell>Price</TableCell>
+              <TableCell>UNIT PRICE</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -81,7 +116,7 @@ const ShoppingCart = () => {
                     <img
                       src={item.image}
                       alt={item.name}
-                      style={{ marginRight: 16 }}
+                      style={{ marginRight: 16, width: 50, height: 50 }}
                     />
                     <Box>
                       <Typography>{item.name}</Typography>
@@ -94,8 +129,8 @@ const ShoppingCart = () => {
                   </Box>
                 </TableCell>
                 <TableCell>
-                  <Button variant="outlined" color="success">
-                    {item.totalPrice}
+                  <Button variant="outlined" color="primary">
+                    Rs {item.totalPrice}
                   </Button>
                 </TableCell>
               </TableRow>
@@ -103,22 +138,10 @@ const ShoppingCart = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button variant="outlined" color="success" style={{margin:"15px"}}>
-        Total Price : {totalPrices}
-      </Button>
+
       <Box mt={2}>
         <Grid container spacing={2}>
-          <Grid item xs={6} sm={3}>
-            <TextField
-              label="Email"
-              variant="outlined"
-              value={userEmail}
-              onChange={(e) => setUserEmail(e.target.value)}
-              fullWidth
-              required
-            />
-          </Grid>
-          <Grid item xs={6} sm={3}>
+          <Grid item xs={12} sm={6}>
             <TextField
               label="Address"
               variant="outlined"
@@ -130,7 +153,6 @@ const ShoppingCart = () => {
           </Grid>
         </Grid>
       </Box>
-      <Box mt={2}></Box>
 
       <Box mt={2} display="flex" justifyContent="space-between">
         <Button
@@ -141,11 +163,9 @@ const ShoppingCart = () => {
         >
           Checkout
         </Button>
-        <Box>
-          <Button variant="outlined" onClick={() => navigate("/")}>
-            Continue Shopping
-          </Button>
-        </Box>
+        <Button variant="outlined" onClick={() => navigate("/")}>
+          Continue Shopping
+        </Button>
       </Box>
     </Box>
   );

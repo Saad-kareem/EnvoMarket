@@ -10,11 +10,9 @@ export class OrderItemDto {
   @IsString()
   @IsNotEmpty()
   name: string;
-
   @IsNumber()
   @IsNotEmpty()
   quantity: number;
-
   @IsNumber()
   @IsNotEmpty()
   totalPrice: number;
@@ -22,6 +20,7 @@ export class OrderItemDto {
   userEmail: string;
   @IsString()
   userAddress: string;
-   @IsNumber()
-   TotalPrice : number
+  @IsNumber()
+  TotalPrice: number;
+  sessionId: string;
 }

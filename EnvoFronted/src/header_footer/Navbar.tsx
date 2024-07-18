@@ -1,16 +1,23 @@
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.jpg";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
-import PersonIcon from "@mui/icons-material/Person";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { FiMenu } from "react-icons/fi";
 import { jwtDecode } from "jwt-decode"; // Correct import statement without curly braces
 import "./navbar.css";
+import { Logout } from "@mui/icons-material";
+import { Button } from "@mui/material";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null); // Initialize userInfo with null
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate("/user/login");
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -25,7 +32,7 @@ const Navbar = () => {
 
   return (
     <>
-      {userInfo ? (
+     {userInfo ? (
         <nav className="navbar">
           <div className="Navbar-Menu">
             <FiMenu />
@@ -63,13 +70,16 @@ const Navbar = () => {
             </div>
             <div className="user-actions">
               <div className="user-icon">
-                <NavLink
-                  to="/register"
-                  style={{ color: "#000", fontSize: "20px" }}
-                >
-                  {" "}
-                  <PersonIcon />
-                </NavLink>
+                {userInfo && (
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="success"
+                    onClick={logout}
+                  >
+                    <Logout style={{ fontSize: "15px" }} />
+                  </Button>
+                )}
               </div>
 
               <div className="wishlist-icon">

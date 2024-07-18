@@ -1,4 +1,4 @@
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { productGet } from "../service/action/action";
@@ -10,10 +10,9 @@ import {
   Typography,
   CardMedia,
 } from "@mui/material";
-import image1 from "../assets/perfume1.jpeg"; // Ensure this path is correct
+import image1 from "../assets/perfume1.jpeg";
 
 const MyCard = ({ data, productGet }: any) => {
-    
   useEffect(() => {
     productGet();
   }, [productGet]);
@@ -26,7 +25,7 @@ const MyCard = ({ data, productGet }: any) => {
         <p>Visit our shop to see amazing products</p>
       </div>
       <Grid container spacing={2} padding={10}>
-        {data.map((product: any, index:any) => (
+        {data.map((product: any, index: any) => (
           <Grid
             item
             xs={12}

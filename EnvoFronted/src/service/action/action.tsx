@@ -12,6 +12,8 @@ import {
   GET_SINGAL_PRODUCT,
 } from "../Constant";
 
+const base_url = "http://localhost:3000";
+
 // get singal Product Action
 export const singleProductSuccess = (data: any) => ({
   type: GET_SINGAL_PRODUCT,
@@ -19,9 +21,13 @@ export const singleProductSuccess = (data: any) => ({
 });
 
 // Check out action
-export const checkoutSuccess = (data: any) => ({
+export const checkoutSuccess = (orderData: {
+  cart: any;
+  userAddress: string;
+  email: string;
+}) => ({
   type: CHECKOUT_SUCCESS,
-  payload: data,
+  payload: orderData,
 });
 
 // User Register Action
@@ -62,7 +68,7 @@ export const addToCart = (item: any) => {
 export const productAdd = (Productes: any) => {
   return (dispatch: any) => {
     axios
-      .post("http://localhost:3000/product/addProduct", Productes)
+      .post(`${base_url}/product/addProduct`, Productes)
       .then((response) => {
         const data = response.data;
         dispatch(AddProductSuccess(data));
@@ -80,9 +86,7 @@ export const productAdd = (Productes: any) => {
 export const productGet = () => {
   return async (dispatch: any) => {
     try {
-      const response = await axios.get(
-        "http://localhost:3000/product/findAllProduct"
-      );
+      const response = await axios.get(`${base_url}/product/findAllProduct`);
       const data = response.data;
       dispatch(fetchDataSuccess(data));
     } catch (error: any) {
@@ -93,13 +97,10 @@ export const productGet = () => {
 export const getSingalProduct = (id: number) => {
   return async (dispatch: any) => {
     try {
-      const response = await axios.get(
-        `http://localhost:3000/product/findOne/${id}`
-      );
+      const response = await axios.get(`${base_url}/product/findOne/${id}`);
       const data = response.data;
       dispatch(singleProductSuccess(data));
-       console.log(data,"action data");
-       
+      console.log(data, "action data");
     } catch (error: any) {
       console.log(error.message);
     }
@@ -110,7 +111,7 @@ export const getSingalProduct = (id: number) => {
 export const fetchData = (postData: any) => {
   return (dispatch: any) => {
     axios
-      .post("http://localhost:3000/user/addUser", postData)
+      .post(`${base_url}/user/addUser`, postData)
       .then((response) => {
         const data = response.data;
         dispatch(registerSuccess(data));
@@ -127,7 +128,7 @@ export const fetchData = (postData: any) => {
 export const loginUser = (data: any) => {
   return (dispatch: any) => {
     axios
-      .post("http://localhost:3000/auth/login", data)
+      .post(`${base_url}/auth/login`, data)
       .then((response) => {
         const userData = response.data;
         dispatch(loginSuccess(userData));
@@ -143,21 +144,22 @@ export const loginUser = (data: any) => {
 
 export const OrderPlace = (
   data: any,
-  userEmail: string,
   userAddress: any,
-  totalPrices: number
+  email: any,
+  sessionId: any
 ) => {
   return (dispatch: any) => {
     axios
-      .post("http://localhost:3000/checkout", {
+      .post(`${base_url}/checkout`, {
         items: data,
-        userEmail,
         userAddress,
-        totalPrices,
+        email,
+        sessionId,
       })
       .then((response) => {
         const userData = response.data;
         dispatch(checkoutSuccess(userData));
+
         toast.success("Order Placed successfully");
       })
       .catch((error) => {

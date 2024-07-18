@@ -10,6 +10,7 @@ import SignUp from "./Register/SignUp";
 import Login from "./Register/Login";
 import AddProduct from "./components/AddProduct";
 import AdminPage from "./components/DashBoard";
+import Success from "./components/OderSuccess";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
             path="/addCart"
             element={<Protected Component={ShoppingCart} />}
           />
+          <Route path="/success" element={<Success />} />
           <Route path="/cart/:id" element={<Protected Component={Cart} />} />
           <Route path="/adminPanel" element={<AdminPage />} />
           <Route

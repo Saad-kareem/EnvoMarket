@@ -27,7 +27,7 @@ const Shop = () => {
                 </div>
                 <div className="borerline"></div>
                 <div className="filterData">
-                  {ShopData.map((data,index) => {
+                  {ShopData.map((data, index) => {
                     return (
                       <div className="Shop-filter" key={index}>
                         <h2>{data.title}</h2>
@@ -69,7 +69,7 @@ const Shop = () => {
                   </div>
                 </div>
               );
-            })}         
+            })}
           </div>
         </div>
       </div>

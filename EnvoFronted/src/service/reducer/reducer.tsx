@@ -104,7 +104,7 @@ export const cartReducer = (state = initialState4, action: any) => {
             ? {
                 ...item,
                 quantity: item.quantity + 1,
-                totalPrice: (item.quantity + 1) * item.price, // Update totalPrice
+                 totalPrice:  item.price, // Update totalPrice
               }
             : item
         );
@@ -112,7 +112,7 @@ export const cartReducer = (state = initialState4, action: any) => {
         const newItem = {
           ...action.payload,
           quantity: 1,
-          totalPrice: action.payload.price, // Initialize totalPrice correctly
+           totalPrice: action.payload.price, // Initialize totalPrice correctly
         };
         updatedCartItems = [...state.cartItems, newItem];
       }
