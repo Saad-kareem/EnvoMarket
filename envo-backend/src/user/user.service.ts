@@ -21,7 +21,7 @@ export class UserService {
     return this.userRespostory.save(user);
   }
   findAll() {
-    return `This action returns all user`;
+    return this.userRespostory.find();
   }
 
   findOne(id: number) {
@@ -36,6 +36,6 @@ export class UserService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    return this.userRespostory.delete({ id });
   }
 }

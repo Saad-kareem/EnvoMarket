@@ -10,10 +10,7 @@ import {
 } from '@nestjs/common';
 import { Product } from './entities/product.entity';
 import { ProductService } from './product.service';
-import { CreateProductDto } from './dto/create-product.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
 import { UploadedFile } from '@nestjs/common';
 
 @Controller('product')
@@ -21,27 +18,20 @@ export class ProductController {
   constructor(private readonly productsService: ProductService) {}
 
   // @Post('/addProduct')
-  // @UseInterceptors(
-  //   FileInterceptor('image', {
-  //     storage: diskStorage({
-  //       destination: './uploads',
-  //       filename: (req, file, cb) => {
-  //         const randomName = Array(32)
-  //           .fill(null)
-  //           .map(() => Math.round(Math.random() * 16).toString(16))
-  //           .join('');
-  //         cb(null, `${randomName}${extname(file.originalname)}`);
-  //       },
-  //     }),
-  //   }),
-  // )
-  // async uploadFile(
+  // @UseInterceptors(FileInterceptor('image'))
+  // async createProduct(
   //   @UploadedFile() file,
-  //   @Body() createProductDto: CreateProductDto,
+  //   @Body() body: { name: string; price: number; description: string },
   // ) {
-  //   createProductDto.imagePath = file.path;
-  //   await this.productService.create(createProductDto);
-  //   return 'success';
+  //   const { name, price, description } = body;
+  //   const imagePath = file ? file.path : null; // Assuming Multer saves the file to 'file.path'
+  //   const product = await this.productsService.create({
+  //     name,
+  //     price,
+  //     description,
+  //     imagePath,
+  //   });
+  //   return product;
   // }
   @Post('/addProduct')
   @UseInterceptors(FileInterceptor('image'))
@@ -50,7 +40,7 @@ export class ProductController {
     @Body() body: { name: string; price: number; description: string },
   ) {
     const { name, price, description } = body;
-    const imagePath = file ? file.path : null; // Assuming Multer saves the file to 'file.path'
+    const imagePath = file ? `/uploads/${file.filename}` : null; // Adjust the path accordingly
     const product = await this.productsService.create({
       name,
       price,
@@ -58,7 +48,8 @@ export class ProductController {
       imagePath,
     });
     return product;
-  }
+  }    
+   
 
   @Get('/findAllProduct')
   async findAll(): Promise<Product[]> {

@@ -4,9 +4,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 
 @Controller('checkout')
 export class CheckoutController {
-  constructor(private readonly checkoutService: CheckoutService,
-     
-  ) {}
+  constructor(private readonly checkoutService: CheckoutService) {}
   @Post()
   async createOrder(@Body() createOrderDto: CreateOrderDto) {
     return this.checkoutService.createOrder(createOrderDto);
@@ -14,6 +12,10 @@ export class CheckoutController {
   @Get('/findOrders')
   async findAll() {
     return this.checkoutService.findAll();
+  }
+  @Get('/paidOrders')
+  async findPaidOrders() {
+    return this.checkoutService.findPaidOrders();
   }
   @Delete(':id')
   remove(@Param('id') id: string) {

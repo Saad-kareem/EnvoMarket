@@ -1,4 +1,4 @@
-import { Injectable,NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Order } from './entities/order.entity';
@@ -22,13 +22,19 @@ export class CheckoutService {
 
   remove(id: number) {
     return this.orderRepository.delete(+id);
-  }async updatePaymentStatus(sessionId: string, status: string): Promise<void> {
+  }
+  async findPaidOrders(): Promise<Order[]> {
+    return this.orderRepository.find({ where: { status: 'paid' } });
+  }
+
+  async updatePaymentStatus(sessionId: string, status: string): Promise<void> {
     const order = await this.orderRepository.findOne({ where: { sessionId } });
     if (!order) {
-      throw new NotFoundException(`Order with session ID ${sessionId} not found.`);
+      throw new NotFoundException(
+        `Order with session ID ${sessionId} not found.`,
+      );
     }
     order.status = status;
     await this.orderRepository.save(order);
   }
-   
 }

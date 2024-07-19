@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { MailService } from 'src/mail/mail.service';
 import { CheckoutService } from 'src/order/order.service';
 import Stripe from 'stripe';
 
@@ -6,7 +7,10 @@ import Stripe from 'stripe';
 export class StripeService {
   private stripe: Stripe;
 
-  constructor(private readonly checkoutService: CheckoutService) {
+  constructor(
+    private readonly checkoutService: CheckoutService,
+    private readonly mailService: MailService,
+  ) {
     this.stripe = new Stripe(
       'sk_test_51Nv06bHv7FnHz0YWmjqCSLVAloCUYE3J8roQ6aTioZWpzCUkFw2DjsRNhBG0PTEPhF5MrklBwUpDs0JIDteXItku00n0fnlFkp',
       {
@@ -41,11 +45,22 @@ export class StripeService {
     console.log(event);
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session;
-    // Update your database with payment status 'paid'
-    await this.checkoutService.updatePaymentStatus(session.id, 'paid');
+      const email = session.customer_email;
+      // Update your database with payment status 'paid'
+      await this.checkoutService.updatePaymentStatus(session.id, 'paid');
 
-    console.log('Payment status updated in database:', session.id);
+      console.log('Payment status updated in database:', session.id);
       console.log('webHook Session', session);
+      if (email) {
+        await this.mailService.sendMail(
+          email,
+          'Order Confirmation',
+          'Your order has been placed successfully.',
+          '<p>Your order has been placed successfully.</p>',
+        );
+      }
+    } else {
+      console.error('Order ID not found in session metadata');
     }
   }
   public getStripeInstance(): Stripe {

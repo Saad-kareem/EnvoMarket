@@ -10,12 +10,12 @@ import {
   Typography,
   CardMedia,
 } from "@mui/material";
-import image1 from "../assets/perfume1.jpeg";
 
 const MyCard = ({ data, productGet }: any) => {
   useEffect(() => {
     productGet();
   }, [productGet]);
+
   return (
     <div>
       <div style={{ textAlign: "center", margin: "30px 0" }}>
@@ -41,10 +41,9 @@ const MyCard = ({ data, productGet }: any) => {
                 <CardMedia
                   component="img"
                   height="260"
-                  image={image1}
-                  alt="Product"
+                  image={`http://localhost:3000/${product.imagePath}`}
+                  alt={product.name}
                 />
-
                 <CardContent sx={{ flex: 1 }}>
                   <Typography gutterBottom variant="h5" component="div">
                     {product.name}

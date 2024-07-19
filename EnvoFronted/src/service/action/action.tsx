@@ -145,7 +145,7 @@ export const loginUser = (data: any) => {
 export const OrderPlace = (
   data: any,
   userAddress: any,
-  email: any,
+  userEmail: string,
   sessionId: any
 ) => {
   return (dispatch: any) => {
@@ -153,7 +153,7 @@ export const OrderPlace = (
       .post(`${base_url}/checkout`, {
         items: data,
         userAddress,
-        email,
+        userEmail,
         sessionId,
       })
       .then((response) => {

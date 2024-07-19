@@ -1,3 +1,4 @@
+
 import cloth from "../assets/clothes1.jpg";
 import Accessories from "../assets/accessories.jpg";
 import art from "../assets/art.jpg";

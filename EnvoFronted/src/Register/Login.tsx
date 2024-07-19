@@ -19,8 +19,7 @@ const Login = ({ UserLogin }: any) => {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const decodedToken = jwtDecode(token);
-        setUserData(decodedToken);
+        setUserData(jwtDecode(token));
       } catch (error) {
         console.error("Error decoding token:", error);
       }

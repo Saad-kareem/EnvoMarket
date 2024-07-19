@@ -12,7 +12,11 @@ export class Order {
     totalPrice: number;
   }[];
   @Column({ nullable: true })
-   status : string
+  userEmail: string;
+  @Column({ nullable: true })
+  userAddress: string;
+  @Column({ nullable: true })
+  status: string;
   @Column({ nullable: true })
   sessionId: string;
 }
