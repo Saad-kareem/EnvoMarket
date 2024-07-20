@@ -34,7 +34,12 @@ const AddProduct = ({ ProductData }: any) => {
     formData.append("name", name);
     formData.append("description", description);
     formData.append("price", price);
-    formData.append("image", image);
+    if (image) {
+      formData.append("image", image);
+    } else {
+      // Handle the case where image is null if needed
+      console.warn("Image is null, not appending to FormData.");
+    }
     ProductData(formData);
   };
 

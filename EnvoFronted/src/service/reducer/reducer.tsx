@@ -1,6 +1,7 @@
 import {
   ADD_TO_CART,
   CHECKOUT_SUCCESS,
+  FETCH_PAID_ORDERS,
   GET_PRODUCT,
   GET_SINGAL_PRODUCT,
   LOGIN_SUCCESS,
@@ -84,8 +85,9 @@ export const GetProductReducer = (state = initialState3, action: any) => {
   }
 };
 
+const storedCart = localStorage.getItem("cart");
 const initialState4 = {
-  cartItems: JSON.parse(localStorage.getItem("cart")) || [],
+  cartItems: storedCart ? JSON.parse(storedCart) : [],
 };
 
 // Define the cart reducer
@@ -104,7 +106,7 @@ export const cartReducer = (state = initialState4, action: any) => {
             ? {
                 ...item,
                 quantity: item.quantity + 1,
-                 totalPrice:  item.price, // Update totalPrice
+                totalPrice: item.price, // Update totalPrice
               }
             : item
         );
@@ -112,7 +114,7 @@ export const cartReducer = (state = initialState4, action: any) => {
         const newItem = {
           ...action.payload,
           quantity: 1,
-           totalPrice: action.payload.price, // Initialize totalPrice correctly
+          totalPrice: action.payload.price, // Initialize totalPrice correctly
         };
         updatedCartItems = [...state.cartItems, newItem];
       }
@@ -136,6 +138,22 @@ export const orderReducer = (state = initialState5, action: any) => {
       return {
         ...state,
         data: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+const initialState8 = {
+  paidOrders: [],
+};
+
+export const paidOrderReducer = (state = initialState8, action: any) => {
+  switch (action.type) {
+    case FETCH_PAID_ORDERS:
+      return {
+        ...state,
+        paidOrders: action.payload,
       };
     default:
       return state;

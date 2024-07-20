@@ -15,7 +15,7 @@ export class CheckoutController {
   }
   @Get('/paidOrders')
   async findPaidOrders() {
-    return this.checkoutService.findPaidOrders();
+    return this.checkoutService.findAllPaidOrders();
   }
   @Delete(':id')
   remove(@Param('id') id: string) {

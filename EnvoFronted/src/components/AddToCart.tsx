@@ -106,6 +106,7 @@ const ShoppingCart = () => {
               <TableCell>Name</TableCell>
               <TableCell>Quantity</TableCell>
               <TableCell>UNIT PRICE</TableCell>
+              <TableCell>Total PRICE</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -131,6 +132,11 @@ const ShoppingCart = () => {
                 <TableCell>
                   <Button variant="outlined" color="primary">
                     Rs {item.totalPrice}
+                  </Button>
+                </TableCell>
+                <TableCell>
+                  <Button variant="outlined" color="primary">
+                    Rs {item.totalPrice * item.quantity}
                   </Button>
                 </TableCell>
               </TableRow>

@@ -19,13 +19,13 @@ export class CheckoutService {
   async findAll() {
     return await this.orderRepository.find();
   }
-
+  async findAllPaidOrders() {
+    return await this.orderRepository.find({ where: { status: 'paid' } });
+  }
   remove(id: number) {
     return this.orderRepository.delete(+id);
   }
-  async findPaidOrders(): Promise<Order[]> {
-    return this.orderRepository.find({ where: { status: 'paid' } });
-  }
+
 
   async updatePaymentStatus(sessionId: string, status: string): Promise<void> {
     const order = await this.orderRepository.findOne({ where: { sessionId } });

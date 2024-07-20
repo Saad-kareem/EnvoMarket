@@ -3,6 +3,7 @@ import {
   cartReducer,
   GetProductReducer,
   orderReducer,
+  paidOrderReducer,
   registrationReducer,
 } from "./reducer";
 import { LoginReducer } from "./reducer";
@@ -14,5 +15,6 @@ export const rootReducer = combineReducers({
   cart: cartReducer,
   orderReducer,
   singalData: SingalProductReducer,
+  orders: paidOrderReducer,
 });
 export type RootState = ReturnType<typeof rootReducer>;

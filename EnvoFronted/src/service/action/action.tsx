@@ -10,6 +10,7 @@ import {
   CHECKOUT,
   CHECKOUT_SUCCESS,
   GET_SINGAL_PRODUCT,
+  FETCH_PAID_ORDERS,
 } from "../Constant";
 
 const base_url = "http://localhost:3000";
@@ -167,4 +168,13 @@ export const OrderPlace = (
         toast.error("Failed to Order Failder. Please try again");
       });
   };
+};
+
+export const fetchPaidOrders = () => async (dispatch: any) => {
+  try {
+    const response = await axios.get(`${base_url}/checkout/paidOrders`);
+    dispatch({ type: FETCH_PAID_ORDERS, payload: response.data });
+  } catch (error) {
+    console.error(error);
+  }
 };

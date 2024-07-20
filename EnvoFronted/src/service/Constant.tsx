@@ -6,3 +6,4 @@ export const ADD_TO_CART = "ADD_TO_CART";
 export const CHECKOUT = "CHECKOUT";
 export const CHECKOUT_SUCCESS = "CHECKOUT_SUCCESS";
 export const  GET_SINGAL_PRODUCT = 'GET_SINGAL_PRODUCT'
+export const FETCH_PAID_ORDERS = 'FETCH_PAID_ORDERS';

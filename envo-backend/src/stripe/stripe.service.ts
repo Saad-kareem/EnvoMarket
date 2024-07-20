@@ -55,8 +55,8 @@ export class StripeService {
         await this.mailService.sendMail(
           email,
           'Order Confirmation',
-          'Your order has been placed successfully.',
-          '<p>Your order has been placed successfully.</p>',
+          'The payment is successful and your order has been placed successfully.',
+          '<p>The payment is successful and your order has been placed successfully.</p>',
         );
       }
     } else {

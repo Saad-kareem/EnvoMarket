@@ -9,13 +9,13 @@ export class Order {
   items: {
     name: string;
     quantity: number;
-    totalPrice: number;
+    Price: number;
   }[];
   @Column({ nullable: true })
   userEmail: string;
   @Column({ nullable: true })
   userAddress: string;
-  @Column({ nullable: true })
+  @Column({ default: 'unpaid' })
   status: string;
   @Column({ nullable: true })
   sessionId: string;
