@@ -5,6 +5,7 @@ import {
   orderReducer,
   paidOrderReducer,
   registrationReducer,
+  UnPaidOrderReducer,
 } from "./reducer";
 import { LoginReducer } from "./reducer";
 import { SingalProductReducer } from "./reducer";
@@ -16,5 +17,6 @@ export const rootReducer = combineReducers({
   orderReducer,
   singalData: SingalProductReducer,
   orders: paidOrderReducer,
+  UnPaidOrders : UnPaidOrderReducer,
 });
 export type RootState = ReturnType<typeof rootReducer>;

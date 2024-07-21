@@ -11,6 +11,7 @@ import {
   CHECKOUT_SUCCESS,
   GET_SINGAL_PRODUCT,
   FETCH_PAID_ORDERS,
+  FETCH_UNPAID_ORDERS,
 } from "../Constant";
 
 const base_url = "http://localhost:3000";
@@ -22,12 +23,12 @@ export const singleProductSuccess = (data: any) => ({
 });
 
 // Check out action
-export const checkoutSuccess = (orderData: {
+export const  checkoutSuccess = (orderData: {
   cart: any;
   userAddress: string;
   email: string;
 }) => ({
-  type: CHECKOUT_SUCCESS,
+  type: typeof CHECKOUT_SUCCESS,
   payload: orderData,
 });
 
@@ -174,6 +175,14 @@ export const fetchPaidOrders = () => async (dispatch: any) => {
   try {
     const response = await axios.get(`${base_url}/checkout/paidOrders`);
     dispatch({ type: FETCH_PAID_ORDERS, payload: response.data });
+  } catch (error) {
+    console.error(error);
+  }
+};
+export const fetchUnPaidOrders = () => async (dispatch: any) => {
+  try {
+    const response = await axios.get(`${base_url}/checkout/unPaidOrders`);
+    dispatch({ type: FETCH_UNPAID_ORDERS, payload: response.data });
   } catch (error) {
     console.error(error);
   }

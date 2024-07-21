@@ -17,22 +17,6 @@ import { UploadedFile } from '@nestjs/common';
 export class ProductController {
   constructor(private readonly productsService: ProductService) {}
 
-  // @Post('/addProduct')
-  // @UseInterceptors(FileInterceptor('image'))
-  // async createProduct(
-  //   @UploadedFile() file,
-  //   @Body() body: { name: string; price: number; description: string },
-  // ) {
-  //   const { name, price, description } = body;
-  //   const imagePath = file ? file.path : null; // Assuming Multer saves the file to 'file.path'
-  //   const product = await this.productsService.create({
-  //     name,
-  //     price,
-  //     description,
-  //     imagePath,
-  //   });
-  //   return product;
-  // }
   @Post('/addProduct')
   @UseInterceptors(FileInterceptor('image'))
   async createProduct(

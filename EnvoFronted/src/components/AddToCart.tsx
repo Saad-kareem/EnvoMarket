@@ -12,6 +12,9 @@ import {
   TableRow,
   Typography,
   TextField,
+  Badge,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -20,6 +23,7 @@ import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { jwtDecode } from "jwt-decode";
 import { OrderPlace } from "../service/action/action";
+
 const stripePromise = loadStripe(
   "pk_test_51Nv06bHv7FnHz0YWZv4xGwu88nT00IMNhKikYWChBFGEEVK88FUjhJfa5ysEGmWKLBmCR3d6o3CrdDKalmUB4bLD00atH2xhnm"
 );
@@ -30,10 +34,9 @@ const ShoppingCart = () => {
   const dispatch = useDispatch();
   const [userAddress, setUserAddress] = useState("");
   const [userInfo, setUserInfo] = useState({ email: "" });
-  const [session, setSession] = useState("");
 
   const email = userInfo.email;
-  localStorage.setItem("session", session);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -67,11 +70,8 @@ const ShoppingCart = () => {
         }
       );
 
-      setSession(data.id);
-
-      // Place the order with the new session ID
       const Items = OrderPlace(cart, userAddress, email, data.id);
-      await dispatch(Items); // Await the dispatch to ensure it completes
+      await dispatch(Items);
       localStorage.removeItem("cart");
 
       const stripe = await stripePromise;

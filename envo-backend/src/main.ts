@@ -5,8 +5,8 @@ import * as bodyParser from 'body-parser';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors({
-    origin: 'http://localhost:5173', // Replace with your frontend URL
-    credentials: true, // Enable if you are using cookies, sessions, etc
+    origin: 'http://localhost:5173',
+    credentials: true,
   });
   app.use(
     bodyParser.json({
@@ -15,6 +15,6 @@ async function bootstrap() {
       },
     }),
   );
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();

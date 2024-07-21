@@ -2,6 +2,7 @@ import {
   ADD_TO_CART,
   CHECKOUT_SUCCESS,
   FETCH_PAID_ORDERS,
+  FETCH_UNPAID_ORDERS,
   GET_PRODUCT,
   GET_SINGAL_PRODUCT,
   LOGIN_SUCCESS,
@@ -154,6 +155,21 @@ export const paidOrderReducer = (state = initialState8, action: any) => {
       return {
         ...state,
         paidOrders: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+const initialState9 = {
+  UnpaidOrders: [],
+};
+
+export const UnPaidOrderReducer = (state = initialState9, action: any) => {
+  switch (action.type) {
+    case FETCH_UNPAID_ORDERS:
+      return {
+        ...state,
+        UnpaidOrders: action.payload,
       };
     default:
       return state;

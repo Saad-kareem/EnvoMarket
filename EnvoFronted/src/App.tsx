@@ -34,6 +34,7 @@ const App = () => {
             path="/addProduct"
             element={<Protected Component={AddProduct} />}
           />
+
           <Route path="/orders" element={<PaidOrders />} />
           <Route path="/register" element={<SignUp />} />
           <Route path="/user/login" element={<Login />} />

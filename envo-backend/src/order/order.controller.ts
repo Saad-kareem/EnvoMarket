@@ -17,6 +17,10 @@ export class CheckoutController {
   async findPaidOrders() {
     return this.checkoutService.findAllPaidOrders();
   }
+  @Get('/unPaidOrders')
+  async findUnPaidOrders() {
+    return this.checkoutService.findAllUnPaidOrders();
+  }
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.checkoutService.remove(+id);
