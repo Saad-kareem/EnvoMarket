@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { TextField, Button, Grid, Container, Typography } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Grid,
+  Container,
+  Typography,
+  Box,
+} from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import { NavLink, useNavigate } from "react-router-dom";
 import { fetchData } from "../service/action/action";
@@ -13,12 +20,14 @@ const SignUp = ({ addUserData }: any) => {
     email: "",
     password: "",
   });
+
   const handleChange = (e: any) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
     addUserData(formData);
@@ -26,84 +35,111 @@ const SignUp = ({ addUserData }: any) => {
       navigate("/user/login");
     }, 5200);
   };
+
   return (
-    <Container maxWidth="sm">
-      <Typography variant="h4" component="h1" gutterBottom mt={10}>
-        User Registration
-      </Typography>
-      <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              name="firstName"
-              label="First Name"
-              variant="outlined"
-              fullWidth
-              value={formData.firstName}
-              onChange={handleChange}
-              required
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="lastName"
-              label="Last Name"
-              variant="outlined"
-              fullWidth
-              value={formData.lastName}
-              onChange={handleChange}
-              required
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="email"
-              label="Email"
-              type="email"
-              variant="outlined"
-              fullWidth
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="password"
-              label="Password"
-              type="password"
-              variant="outlined"
-              fullWidth
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </Grid>
-          <span
-            style={{ fontSize: "12px", marginLeft: "20px", marginTop: "7px" }}
+    <Box
+      sx={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Container maxWidth="xs">
+        <Box
+          sx={{
+            backgroundColor: "white",
+            padding: "2rem",
+            borderRadius: "8px",
+            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <Typography
+            variant="h4"
+            component="h1"
+            gutterBottom
+            textAlign="center"
           >
-            If you have already an acount
-            <NavLink
-              to="/user/login"
-              style={{ fontSize: "13px", marginLeft: "10px", marginTop: "7px" }}
-            >
-              Go to Login
-            </NavLink>
-          </span>
-          <Grid item xs={12}>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              startIcon={<SaveIcon />}
-              fullWidth
-            >
-              Register
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Container>
+            User Registration
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  name="firstName"
+                  label="First Name"
+                  variant="outlined"
+                  fullWidth
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="lastName"
+                  label="Last Name"
+                  variant="outlined"
+                  fullWidth
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="email"
+                  label="Email"
+                  type="email"
+                  variant="outlined"
+                  fullWidth
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="password"
+                  label="Password"
+                  type="password"
+                  variant="outlined"
+                  fullWidth
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </Grid>
+              <Grid item xs={12} textAlign="center">
+                <Typography variant="body2">
+                  If you already have an account
+                  <NavLink to="/user/login" style={{ marginLeft: "5px" }}>
+                    Go to Login
+                  </NavLink>
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  startIcon={<SaveIcon />}
+                  fullWidth
+                  sx={{
+                    background: "linear-gradient(to right, #6a11cb, #2575fc)",
+                    color: "white",
+                    padding: "0.75rem",
+                    marginTop: "1rem",
+                  }}
+                >
+                  Register
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </Box>
+      </Container>
+    </Box>
   );
 };
 

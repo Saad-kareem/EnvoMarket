@@ -13,6 +13,7 @@ import AdminPage from "./components/DashBoard";
 import Success from "./components/OderSuccess";
 import PaidOrders from "./components/Order";
 import NotFound from "./components/ErrorPage";
+import UnPaidOrders from "./components/UnPaidOrders";
 
 const App = () => {
   return (
@@ -34,7 +35,7 @@ const App = () => {
             path="/addProduct"
             element={<Protected Component={AddProduct} />}
           />
-
+          <Route path="/UnPaidOrders" element={<UnPaidOrders />} />
           <Route path="/orders" element={<PaidOrders />} />
           <Route path="/register" element={<SignUp />} />
           <Route path="/user/login" element={<Login />} />

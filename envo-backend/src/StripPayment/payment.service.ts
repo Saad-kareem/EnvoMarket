@@ -4,9 +4,9 @@ import { CheckoutService } from 'src/order/order.service';
 import Stripe from 'stripe';
 
 @Injectable()
-export class StripeService {
+export class PaymentService {
   private stripe: Stripe;
-  private readonly logger = new Logger(StripeService.name);
+  private readonly logger = new Logger(PaymentService.name);
 
   constructor(
     private readonly checkoutService: CheckoutService,
