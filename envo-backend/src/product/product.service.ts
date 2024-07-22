@@ -7,8 +7,8 @@ import { Repository } from 'typeorm';
 export class ProductService {
   constructor(
     @InjectRepository(Product) private productRepository: Repository<Product>,
- 
   ) {}
+
   async create(productData: Partial<Product>): Promise<Product> {
     const product = this.productRepository.create(productData);
     return await this.productRepository.save(product);
@@ -18,15 +18,12 @@ export class ProductService {
     return await this.productRepository.find();
   }
 
-  findOne(id: number) {
+  async findOne(id: number): Promise<Product> {
     return this.productRepository.findOneBy({ id });
   }
 
-  update(id: number) {
-    return `This action updates a #${id} product`;
-  }
 
-  remove(id: number) {
-    return this.productRepository.delete(id);
+  async remove(id: number): Promise<void> {
+    await this.productRepository.delete(id);
   }
 }

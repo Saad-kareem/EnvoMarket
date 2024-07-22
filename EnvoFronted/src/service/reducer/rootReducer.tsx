@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import {
   cartReducer,
   GetProductReducer,
+  messageReducer,
   orderReducer,
   paidOrderReducer,
   registrationReducer,
@@ -17,6 +18,7 @@ export const rootReducer = combineReducers({
   orderReducer,
   singalData: SingalProductReducer,
   orders: paidOrderReducer,
-  UnPaidOrders : UnPaidOrderReducer,
+  UnPaidOrders: UnPaidOrderReducer,
+  message: messageReducer,
 });
 export type RootState = ReturnType<typeof rootReducer>;

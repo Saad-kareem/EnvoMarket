@@ -1,6 +1,7 @@
 import {
   ADD_TO_CART,
   CHECKOUT_SUCCESS,
+  CONTACT_SUCCESS,
   FETCH_PAID_ORDERS,
   FETCH_UNPAID_ORDERS,
   GET_PRODUCT,
@@ -170,6 +171,21 @@ export const UnPaidOrderReducer = (state = initialState9, action: any) => {
       return {
         ...state,
         UnpaidOrders: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+const initialState10 = {
+  message: [],
+};
+
+export const messageReducer = (state = initialState10, action: any) => {
+  switch (action.type) {
+    case CONTACT_SUCCESS:
+      return {
+        ...state,
+        message: action.payload,
       };
     default:
       return state;

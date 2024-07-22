@@ -14,6 +14,7 @@ import Success from "./components/OderSuccess";
 import PaidOrders from "./components/Order";
 import NotFound from "./components/ErrorPage";
 import UnPaidOrders from "./components/UnPaidOrders";
+import ContactForm from "./Register/Contact";
 
 const App = () => {
   return (
@@ -28,18 +29,31 @@ const App = () => {
             path="/addCart"
             element={<Protected Component={ShoppingCart} />}
           />
-          <Route path="/success" element={<Success />} />
+          <Route path="/success" element={<Protected Component={Success} />} />
           <Route path="/cart/:id" element={<Protected Component={Cart} />} />
-          <Route path="/adminPanel" element={<AdminPage />} />
+          <Route
+            path="/adminPanel"
+            element={<Protected Component={AdminPage} />}
+          />
           <Route
             path="/addProduct"
             element={<Protected Component={AddProduct} />}
           />
-          <Route path="/UnPaidOrders" element={<UnPaidOrders />} />
-          <Route path="/orders" element={<PaidOrders />} />
+          <Route
+            path="/UnPaidOrders"
+            element={<Protected Component={UnPaidOrders} />}
+          />
+          <Route
+            path="/orders"
+            element={<Protected Component={PaidOrders} />}
+          />
+          <Route
+            path="/contact"
+            element={<Protected Component={ContactForm} />}
+          />
           <Route path="/register" element={<SignUp />} />
           <Route path="/user/login" element={<Login />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<Protected Component={NotFound} />} />
         </Routes>
       </Router>
     </div>

@@ -12,9 +12,16 @@ import {
   GET_SINGAL_PRODUCT,
   FETCH_PAID_ORDERS,
   FETCH_UNPAID_ORDERS,
+  CONTACT_SUCCESS,
 } from "../Constant";
 
 const base_url = "http://localhost:3000";
+
+// post contact Message Action
+export const contact = (data: any) => ({
+  type: CONTACT_SUCCESS,
+  payload: data,
+});
 
 // get singal Product Action
 export const singleProductSuccess = (data: any) => ({
@@ -23,7 +30,7 @@ export const singleProductSuccess = (data: any) => ({
 });
 
 // Check out action
-export const  checkoutSuccess = (orderData: {
+export const checkoutSuccess = (orderData: {
   cart: any;
   userAddress: string;
   email: string;
@@ -186,4 +193,20 @@ export const fetchUnPaidOrders = () => async (dispatch: any) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const postContact = (data: any) => {
+  return (dispatch: any) => {
+    axios
+      .post(`${base_url}/contact/SendMessage`, data)
+      .then((response) => {
+        const message = response.data;
+        dispatch(contact(message));
+        toast.success("The Message Sent Successfully");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to send message. Please check your credentials.");
+      });
+  };
 };

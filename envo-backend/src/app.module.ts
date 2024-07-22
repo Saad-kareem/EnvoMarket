@@ -12,6 +12,8 @@ import { Order } from './order/entities/order.entity';
 import { MailModule } from './mail/mail.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { ContactModule } from './contact/contact.module';
+import { Contact } from './contact/entities/contact.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -28,13 +30,9 @@ import { join } from 'path';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [User, Product, Order],
+        entities: [User, Product, Order, Contact],
         synchronize: configService.get('DB_SYNC'),
       }),
-    }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'uploads'),
-      serveRoot: '/uploads',
     }),
 
     UserModule,
@@ -43,6 +41,7 @@ import { join } from 'path';
     OrderModule,
     StripeModule,
     MailModule,
+    ContactModule,
   ],
   controllers: [],
   providers: [],

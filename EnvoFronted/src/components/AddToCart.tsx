@@ -12,9 +12,6 @@ import {
   TableRow,
   Typography,
   TextField,
-  Badge,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";

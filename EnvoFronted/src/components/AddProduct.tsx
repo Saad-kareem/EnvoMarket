@@ -1,9 +1,18 @@
 import { useState, useEffect } from "react";
-import { Button, TextField, Typography, Container, Grid } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Typography,
+  Container,
+  Paper,
+  Box,
+  Avatar,
+} from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import { connect } from "react-redux";
 import { productAdd } from "../service/action/action";
 import NotFound from "./ErrorPage";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 const AddProduct = ({ ProductData }: any) => {
   const [name, setName] = useState("");
@@ -21,7 +30,7 @@ const AddProduct = ({ ProductData }: any) => {
         console.error("Error decoding token:", error);
       }
     }
-  }, []); // Only run once on component mount
+  }, []);
 
   const handleFileChange = (e: any) => {
     setImage(e.target.files[0]);
@@ -37,58 +46,118 @@ const AddProduct = ({ ProductData }: any) => {
     if (image) {
       formData.append("image", image);
     } else {
-      // Handle the case where image is null if needed
       console.warn("Image is null, not appending to FormData.");
     }
-    ProductData(formData);
+    setTimeout(() => {
+      ProductData(formData);
+      setName("");
+      setPrice("");
+      setDescription("");
+      setImage(null);
+    }, 3000);
   };
 
   return (
     <>
       {userInfo.role === "Admin" ? (
-        <Container maxWidth="sm">
-          <Typography variant="h4" gutterBottom>
-            Add Product
-          </Typography>
-          <form onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  label="Name"
+        <Container component="main" maxWidth="xs">
+          <Paper
+            elevation={6}
+            sx={{
+              mt: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              padding: 3,
+              borderRadius: 2,
+              background: "linear-gradient(to right, #8e2de2, #4a00e0)",
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5" color="white">
+              Add Product
+            </Typography>
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="Name"
+                name="name"
+                autoComplete="name"
+                autoFocus
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                InputLabelProps={{ style: { color: "white" } }}
+                InputProps={{ style: { color: "white" } }}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="description"
+                label="Description"
+                id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                InputLabelProps={{ style: { color: "white" } }}
+                InputProps={{ style: { color: "white" } }}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="price"
+                label="Price"
+                type="number"
+                id="price"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                InputLabelProps={{ style: { color: "white" } }}
+                InputProps={{ style: { color: "white" } }}
+              />
+              <input
+                accept="image/*"
+                style={{ display: "none" }}
+                id="image"
+                type="file"
+                onChange={handleFileChange}
+              />
+              <label htmlFor="image">
+                <Button
+                  variant="contained"
+                  component="span"
                   fullWidth
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Description"
-                  fullWidth
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  label="Price"
-                  type="number"
-                  fullWidth
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <input type="file" onChange={handleFileChange} />
-              </Grid>
-
-              <Grid item xs={12}>
-                <Button type="submit" variant="contained" color="primary">
-                  Add Product
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    backgroundColor: "white",
+                    color: "#4a00e0",
+                    "&:hover": {
+                      backgroundColor: "#f2f2f2",
+                    },
+                  }}
+                >
+                  Upload Image
                 </Button>
-              </Grid>
-            </Grid>
-          </form>
+              </label>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Add Product
+              </Button>
+            </Box>
+          </Paper>
         </Container>
       ) : (
         <NotFound />

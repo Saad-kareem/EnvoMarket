@@ -13,6 +13,7 @@ export class Product {
 
   @Column()
   price: number;
-  @Column() // Store file path or reference
-  imagePath: string;
+
+  @Column({ nullable: true })
+  imagePath: string; // Store file path or reference
 }
