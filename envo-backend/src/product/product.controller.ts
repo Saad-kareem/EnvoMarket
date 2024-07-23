@@ -37,9 +37,15 @@ export class ProductController {
   )
   async createProduct(
     @UploadedFile() file,
-    @Body() body: { name: string; price: number; description: string },
+    @Body()
+    body: {
+      name: string;
+      price: number;
+      description: string;
+      category: string;
+    },
   ) {
-    const { name, price, description } = body;
+    const { name, price, description, category } = body;
     const imagePath = file
       ? `/media/saad/D/EnvoMarket/envo-backend/uploads/${file.filename}`
       : null;
@@ -47,6 +53,7 @@ export class ProductController {
       name,
       price,
       description,
+      category,
       imagePath,
     });
     return product;
@@ -67,4 +74,3 @@ export class ProductController {
     return this.productsService.remove(+id);
   }
 }
-

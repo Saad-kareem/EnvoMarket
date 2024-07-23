@@ -5,15 +5,16 @@ export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   description: string;
 
-  @Column()
-  price: number;
-
   @Column({ nullable: true })
-  imagePath: string; // Store file path or reference
+  price: number;
+  @Column({ nullable: true })
+  category: string;
+  @Column({ nullable: true })
+  imagePath: string;
 }

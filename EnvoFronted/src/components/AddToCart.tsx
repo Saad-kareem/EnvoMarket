@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -18,7 +18,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
-import { jwtDecode } from "jwt-decode";
+
 import { OrderPlace } from "../service/action/action";
 
 const stripePromise = loadStripe(
@@ -30,20 +30,7 @@ const ShoppingCart = () => {
   const cart = useSelector((state: any) => state.cart.cartItems);
   const dispatch = useDispatch();
   const [userAddress, setUserAddress] = useState("");
-  const [userInfo, setUserInfo] = useState({ email: "" });
-
-  const email = userInfo.email;
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      try {
-        setUserInfo(jwtDecode(token));
-      } catch (error) {
-        console.error("Error decoding token:", error);
-      }
-    }
-  }, []);
+  const [email, setEmail] = useState("");
 
   const handleCheckout = async () => {
     if (cart.length === 0) {
@@ -53,7 +40,7 @@ const ShoppingCart = () => {
       return;
     }
 
-    if (!userAddress) {
+    if (!userAddress && !email) {
       alert("Please fill in your address before checkout.");
       return;
     }
@@ -154,6 +141,16 @@ const ShoppingCart = () => {
               required
             />
           </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Email"
+              variant="outlined"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              fullWidth
+              required
+            />
+          </Grid>
         </Grid>
       </Box>
 
@@ -175,3 +172,5 @@ const ShoppingCart = () => {
 };
 
 export default ShoppingCart;
+
+

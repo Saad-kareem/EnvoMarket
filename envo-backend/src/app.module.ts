@@ -10,8 +10,6 @@ import { StripeModule } from './stripe/stripe.module';
 import { OrderModule } from './order/order.module';
 import { Order } from './order/entities/order.entity';
 import { MailModule } from './mail/mail.module';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 import { ContactModule } from './contact/contact.module';
 import { Contact } from './contact/entities/contact.entity';
 @Module({
@@ -31,7 +29,7 @@ import { Contact } from './contact/entities/contact.entity';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         entities: [User, Product, Order, Contact],
-        synchronize: configService.get('DB_SYNC'),
+        synchronize: true,
       }),
     }),
 

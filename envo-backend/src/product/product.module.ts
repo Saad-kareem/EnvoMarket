@@ -10,7 +10,6 @@ import { MulterModule } from '@nestjs/platform-express';
       dest: './uploads',
     }),
     TypeOrmModule.forFeature([Product]),
-   
   ],
   controllers: [ProductController],
   providers: [ProductService],

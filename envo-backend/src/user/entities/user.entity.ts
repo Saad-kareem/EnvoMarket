@@ -1,21 +1,25 @@
-import { Order } from 'src/order/entities/order.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column()
+
+  @Column({ nullable: true })
   firstName: string;
-  @Column()
+
+  @Column({ nullable: true })
   lastName: string;
-  @Column()
+
+  @Column({ unique: true, nullable: true })
   email: string;
-  @Column()
+
+  @Column({ nullable: true })
   password: string;
-  @Column()
+
+  @Column({ nullable: true })
   role: string;
 
-  // @OneToMany(() => Order, (todo) => todo.user)
-  // order: Order[];
+  @Column({ default: true })
+  firstLogin: boolean;
 }

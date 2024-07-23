@@ -4,7 +4,9 @@ import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private jwtService: JwtService) {}
+  constructor(private jwtService: JwtService,
+    
+  ) {}
 
   @Post('/login')
   @UseGuards(AuthGuard('local'))

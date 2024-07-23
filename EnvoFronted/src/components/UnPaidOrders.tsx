@@ -69,7 +69,7 @@ const UnPaidOrders = () => {
                 totalPrice: totalPrice, // Ensure totalPrice is included
               };
             })
-            .filter((item) => item !== null); // Remove invalid items
+            .filter((item: any) => item !== null); // Remove invalid items
         })
         .flat();
 

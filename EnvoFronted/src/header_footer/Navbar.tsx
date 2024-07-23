@@ -42,78 +42,82 @@ const Navbar = () => {
 
   return (
     <>
-      {token && (
-        <nav className="navbar">
-          <div className="Navbar-Menu" onClick={toggleMenu}>
-            <FiMenu />
-          </div>
-          <div className="logo">
-            <img src={logo} alt="Logo" />
-          </div>
+      <nav className="navbar">
+        <div className="Navbar-Menu" onClick={toggleMenu}>
+          <FiMenu />
+        </div>
+        <div className="logo">
+          <img src={logo} alt="Logo" />
+        </div>
 
-          {(!isMenuOpen || windowWidth > 768) && (
-            <>
-              <div className="navbar-left">
-                <div className="search-bar">
-                  <select className="category-select">
-                    <option>All Categories</option>
-                  </select>
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    className="search-input"
-                  />
+        {(!isMenuOpen || windowWidth > 768) && (
+          <>
+            <div className="navbar-left">
+              <div className="search-bar">
+                <select className="category-select">
+                  <option>All Categories</option>
+                </select>
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="search-input"
+                />
 
-                  <button className="search-button">
-                    <ZoomOutIcon />
-                  </button>
+                <button className="search-button">
+                  <ZoomOutIcon />
+                </button>
+              </div>
+            </div>
+            <div className="navbar-right">
+              <div>
+                <div className="contact-info">
+                  <span className="ConatactNumber">+392496581580</span>
+                  <span className="contact-price">CALL US FREE</span>
+                </div>
+                <div className="shipping-info">
+                  <span className="ConatactNumber">FREE SHIPPING</span>
+                  <span className="contact-price">ON ORDERS OVER $150.0</span>
                 </div>
               </div>
-              <div className="navbar-right">
-                <div>
-                  <div className="contact-info">
-                    <span className="ConatactNumber">+392496581580</span>
-                    <span className="contact-price">CALL US FREE</span>
-                  </div>
-                  <div className="shipping-info">
-                    <span className="ConatactNumber">FREE SHIPPING</span>
-                    <span className="contact-price">ON ORDERS OVER $150.0</span>
-                  </div>
-                </div>
-                <div className="user-actions">
-                  <div className="user-icon">
-                    {token && (
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        color="success"
-                        onClick={logout}
-                      >
-                        <Logout style={{ fontSize: "15px" }} />
+              <div className="user-actions">
+                <div className="user-icon">
+                  {token ? (
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      color="success"
+                      onClick={logout}
+                    >
+                      <Logout style={{ fontSize: "15px" }} />
+                    </Button>
+                  ) : (
+                    <NavLink to="/user/login">
+                      <Button size="small" variant="outlined" color="success">
+                        Sign In
                       </Button>
-                    )}
-                  </div>
-
-                  <div className="wishlist-icon">
-                    <FavoriteBorderIcon />
-                  </div>
-                  <div className="cart-icon">
-                    <NavLink to="/addCart">
-                      <ShoppingCartIcon />
                     </NavLink>
-                  </div>
+                  )}
+                </div>
+
+                <div className="wishlist-icon">
+                  <FavoriteBorderIcon />
+                </div>
+                <div className="cart-icon">
+                  <NavLink to="/addCart">
+                    <ShoppingCartIcon />
+                  </NavLink>
                 </div>
               </div>
-              <div className="navbar-links">
-                <NavLink to="/">Home</NavLink>
-                <NavLink to="/shops">Shop</NavLink>
-                <NavLink to="/products">Products</NavLink>
-                <NavLink to="/contact">Contact Us</NavLink>
-              </div>
-            </>
-          )}
-        </nav>
-      )}
+            </div>
+            <div className="navbar-links">
+              <NavLink to="/">Home</NavLink>
+              <NavLink to="/shops">Shop</NavLink>
+              <NavLink to="/products">Products</NavLink>
+              <NavLink to="/contact">Contact Us</NavLink>
+            </div>
+          </>
+        )}
+      </nav>
     </>
   );
 };

@@ -142,10 +142,13 @@
   right: 20px;
   top: 20px;
   cursor: pointer;
-  display: none; /* Hide by default */
+  display: none;
+}
+.navbar-links .active {
+  color: #ff6347;
+  font-weight: bold;
 }
 
-/* Responsive Styles */
 @media (max-width: 768px) {
   .navbar {
     width: 100%;

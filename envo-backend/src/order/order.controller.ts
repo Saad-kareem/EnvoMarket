@@ -26,3 +26,5 @@ export class CheckoutController {
     return this.checkoutService.remove(+id);
   }
 }
+
+

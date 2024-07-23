@@ -20,17 +20,14 @@ const App = () => {
   return (
     <div>
       <Router>
-        <Protected Component={Navbar} />
+        <Navbar />
         <Routes>
-          <Route path="/" element={<Protected Component={Home} />} />
-          <Route path="/products" element={<Protected Component={MyCard} />} />
-          <Route path="/shops" element={<Protected Component={Shop} />} />
-          <Route
-            path="/addCart"
-            element={<Protected Component={ShoppingCart} />}
-          />
-          <Route path="/success" element={<Protected Component={Success} />} />
-          <Route path="/cart/:id" element={<Protected Component={Cart} />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<MyCard />} />
+          <Route path="/shops" element={<Shop />} />
+          <Route path="/addCart" element={<ShoppingCart />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/cart/:id" element={<Cart />} />
           <Route
             path="/adminPanel"
             element={<Protected Component={AdminPage} />}
@@ -47,13 +44,10 @@ const App = () => {
             path="/orders"
             element={<Protected Component={PaidOrders} />}
           />
-          <Route
-            path="/contact"
-            element={<Protected Component={ContactForm} />}
-          />
+          <Route path="/contact" element={<ContactForm />} />
           <Route path="/register" element={<SignUp />} />
           <Route path="/user/login" element={<Login />} />
-          <Route path="*" element={<Protected Component={NotFound} />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </div>

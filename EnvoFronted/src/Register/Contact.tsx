@@ -84,6 +84,7 @@ const ContactForm = ({ messagePost }: any) => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                required
                 fullWidth
                 label="Full Name"
                 variant="outlined"
@@ -93,6 +94,7 @@ const ContactForm = ({ messagePost }: any) => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                required
                 fullWidth
                 label="Email Address"
                 variant="outlined"
@@ -102,6 +104,7 @@ const ContactForm = ({ messagePost }: any) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                required
                 fullWidth
                 label="Subject"
                 variant="outlined"
@@ -111,6 +114,7 @@ const ContactForm = ({ messagePost }: any) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                required
                 fullWidth
                 label="Message"
                 multiline

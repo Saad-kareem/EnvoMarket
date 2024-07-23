@@ -4,12 +4,12 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export class Contact {
    @PrimaryGeneratedColumn()
     id : number
-  @Column()
+  @Column({ nullable: true })
   FullName: string;
-  @Column()
+  @Column({ nullable: true })
   email: string;
-  @Column()
+  @Column({ nullable: true })
   Subject: string;
-  @Column()
+  @Column({ nullable: true })
   Message: string;
 }

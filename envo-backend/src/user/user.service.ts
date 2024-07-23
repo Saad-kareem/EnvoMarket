@@ -17,22 +17,15 @@ export class UserService {
     user.lastName = createUserDto.lastName;
     user.email = createUserDto.email;
     user.password = createUserDto.password;
-    user.role = Constants.ROLES.NORMAL_ROLE;
+    user.role = Constants.ROLES.ADMIN_ROLE;
     return this.userRespostory.save(user);
   }
+
   findAll() {
     return this.userRespostory.find();
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
   findUserByEmail(email: string) {
     return this.userRespostory.findOneOrFail({ where: { email: email } });
-  }
-
-  update(id: number) {
-    return `This action updates a #${id} user`;
   }
 
   remove(id: number) {

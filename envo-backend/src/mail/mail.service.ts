@@ -1,4 +1,3 @@
-// mail/mail.service.ts
 import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 
@@ -9,8 +8,8 @@ export class MailService {
   constructor() {
     this.transporter = nodemailer.createTransport({
       service: "gmail",
-      port: 465, // Replace with your SMTP port
-      secure: true, // true for 465, false for other ports
+      port: 465,
+      secure: true, 
       auth: {
         user: 'saadkareem475@gmail.com',
         pass: 'mvnf xmig kzsz gfcc',

@@ -97,6 +97,7 @@ export const productGet = () => {
     try {
       const response = await axios.get(`${base_url}/product/findAllProduct`);
       const data = response.data;
+
       dispatch(fetchDataSuccess(data));
     } catch (error: any) {
       console.log(error.message);
